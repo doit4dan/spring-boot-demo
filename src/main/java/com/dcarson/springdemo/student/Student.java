@@ -1,44 +1,67 @@
 package com.dcarson.springdemo.student;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+
+@Entity
+@Table(name = "Student")
 public class Student {
-    private String firstName;
-    private String lastName;
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    private String firstname;
+
+    private String lastname;
+
     private LocalDate dateOfBirth;
+
+    @Column(unique = true)
     private String email;
+
+    @Transient
     private int age;
 
     public Student() {}
 
     public Student(
-            String firstName,
-            String lastName,
+            String firstname,
+            String lastname,
             LocalDate dateOfBirth,
             String email,
             int age
     ) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.age = age;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public LocalDate getDateOfBirth() {
@@ -58,7 +81,7 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(dateOfBirth,LocalDate.now()).getYears();
     }
 
     public void setAge(int age) {
